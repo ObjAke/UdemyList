@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Udemy コース一覧</title>
+</head>
+<body>
+
+<h1>Udemy コース一覧</h1>
+<div id="list"></div>
+
+<script>
+async function load() {
+    const url = "https://www.udemy.com/api-2.0/users/me/subscribed-courses/?page=1&page_size=100";
+
+    const res = await fetch(url, { credentials: "include" });
+    const data = await res.json();
+
+    const list = document.getElementById("list");
+
+    data.results.forEach(c => {
+        const a = document.createElement("a");
+        a.href = "https://www.udemy.com" + c.url;
+        a.textContent = c.title;
+        a.target = "_blank";
+
+        const div = document.createElement("div");
+        div.appendChild(a);
+
+        list.appendChild(div);
+    });
+}
+
+load();
+</script>
+
+</body>
+</html>
